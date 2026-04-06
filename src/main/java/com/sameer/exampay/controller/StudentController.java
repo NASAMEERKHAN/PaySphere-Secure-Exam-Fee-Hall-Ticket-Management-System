@@ -43,25 +43,22 @@ public class StudentController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Student loginRequest){
 
-        Student student = studentRepository.findAll()
-                .stream()
-                .filter(s -> s.getHallTicketNumber() != null &&
-                        s.getHallTicketNumber().trim()
-                                .equalsIgnoreCase(loginRequest.getHallTicketNumber().trim()))
-                .findFirst()
-                .orElse(null);
+        String hallTicket = loginRequest.getHallTicketNumber().trim();
+        String password = loginRequest.getPassword().trim();
+
+        Student student = studentRepository
+                .findByHallTicketNumberIgnoreCase(hallTicket);
 
         if(student == null){
             return ResponseEntity.status(401).body("Invalid Hall Ticket");
         }
 
-        if(!student.getPassword().trim().equals(loginRequest.getPassword().trim())){
+        if(!student.getPassword().equals(password)){
             return ResponseEntity.status(401).body("Invalid Password");
         }
 
         return ResponseEntity.ok(student);
     }
-
     // 📊 GET PAYMENTS
     @GetMapping("/payments/{hallTicket}")
     public List<SemesterPayment> getPayments(@PathVariable String hallTicket){
@@ -69,6 +66,43 @@ public class StudentController {
         return semesterPaymentRepository
                 .findByHallTicketNumberOrderBySemesterAsc(hallTicket);
     }
+    @PostMapping("/add")
+    public Student addStudent(@RequestBody Student student){
+
+        // 🔥 Auto-generate password based on hallticket
+        String hallTicket = student.getHallTicketNumber();
+
+        if(hallTicket.endsWith("101") || hallTicket.endsWith("1")){
+            student.setPassword("1234");
+        } else if(hallTicket.endsWith("102") || hallTicket.endsWith("2")){
+            student.setPassword("5678");
+        } else if(hallTicket.endsWith("103") || hallTicket.endsWith("3")){
+            student.setPassword("2468");
+        } else if(hallTicket.endsWith("104") || hallTicket.endsWith("4")){
+            student.setPassword("1357");
+        } else if(hallTicket.endsWith("105") || hallTicket.endsWith("5")){
+            student.setPassword("9999");
+        } else {
+            student.setPassword("0000"); // default fallback
+        }
+
+        // 1️⃣ Save student
+        Student savedStudent = studentRepository.save(student);
+
+        // 2️⃣ Create semester payments
+        for(int i = 1; i <= 8; i++){
+            SemesterPayment p = new SemesterPayment();
+            p.setHallTicketNumber(savedStudent.getHallTicketNumber());
+            p.setSemester(String.valueOf(i));
+            p.setAmount(8750.0);
+            p.setStatus("PENDING");
+
+            semesterPaymentRepository.save(p);
+        }
+
+        return savedStudent;
+    }
+
 
     // 💰 MARK PAYMENT
     @PutMapping("/pay/{hallTicket}/{semester}")
