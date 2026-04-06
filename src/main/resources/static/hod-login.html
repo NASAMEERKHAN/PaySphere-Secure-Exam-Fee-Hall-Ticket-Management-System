@@ -99,8 +99,7 @@
           console.log("Response:", data); // 🔍 DEBUG
 
           if(data && data.username){
-              localStorage.setItem("hodDept", data.department);
-              localStorage.setItem("hodUser", data.username);
+             localStorage.setItem("hod", JSON.stringify(data));
 
               window.location.href = "hod-dashboard.html";
           } else {

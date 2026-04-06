@@ -160,7 +160,8 @@
 
 </div>
 <script>
-    let dept = localStorage.getItem("hodDept");
+    let hod=JSON.parse(localStorage.getItem("hod"));
+    let dept=hod.dept;
 
     function formatDeptFull(dept){
         if(dept === "CSE_DS") return "CSE(DS)";

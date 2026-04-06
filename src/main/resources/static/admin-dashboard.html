@@ -316,7 +316,12 @@ table.innerHTML += row;
     if(dept === "ALL"){
     render(allData);
     }else{
-    render(allData.filter(s => s.department === dept));
+    let map={
+    "CSE(DS)":"CSDS",
+    "AI&DS":"AIDS"
+    };
+    let actualDept=map[dept ]|| dept;
+    render(allData.filter(s => s.department === actualDept));
     }
     }
 async function notifyHod(studentId, semester){
