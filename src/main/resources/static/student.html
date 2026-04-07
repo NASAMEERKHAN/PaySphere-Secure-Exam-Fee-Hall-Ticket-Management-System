@@ -273,7 +273,7 @@ border-radius:8px;
     // 🔔 LOAD NOTIFICATIONS
     async function loadNotifications(){
 
-    let res = await fetch(`http://localhost:8080/student/notifications/${roll}`);
+    let res = await fetch(`https://exampay-backend.onrender.com/student/notifications/${roll}`);
     let data = await res.json();
 
     let list = document.getElementById("notificationList");
@@ -309,7 +309,7 @@ Delete
     // 🔴 UNREAD COUNT
     async function loadUnreadCount(){
 
-    let res = await fetch(`http://localhost:8080/student/notifications/unread/${roll}`);
+    let res = await fetch(`https://exampay-backend.onrender.com/student/notifications/unread/${roll}`);
     let count = await res.json();
 
     let badge = document.getElementById("notifCount");
@@ -325,28 +325,28 @@ Delete
     // ✔ MARK AS READ
     async function markRead(id){
 
-    await fetch(`http://localhost:8080/student/notifications/read/${id}`, {
+    await fetch(`https://exampay-backend.onrender.com/student/notifications/read/${id}`, {
         method:"PUT"
     });
 
     loadNotifications();
     }
     async function deleteNotification(id){
-await fetch(`http://localhost:8080/student/notifications/delete/${id}`, {
+await fetch(`https://exampay-backend.onrender.com/student/notifications/delete/${id}`, {
     method:"PUT"
 });
 loadNotifications();
 }
 
 async function markAllRead(){
-await fetch(`http://localhost:8080/student/notifications/read-all/${roll}`, {
+await fetch(`https://exampay-backend.onrender.com/student/notifications/read-all/${roll}`, {
     method:"PUT"
 });
 loadNotifications();
 }
 
 async function clearAll(){
-await fetch(`http://localhost:8080/student/notifications/clear/${roll}`, {
+await fetch(`https://exampay-backend.onrender.com/student/notifications/clear/${roll}`, {
     method:"PUT"
 });
 loadNotifications();
@@ -354,27 +354,29 @@ loadNotifications();
 
 function formatTime(time){
 
-if(!time) return "";
+    if(!time) return "";
 
-let past = new Date(time);
-let now = new Date();
+    let past = new Date(time +"Z");
 
-let diff = (now - past) / 1000;
 
-if(diff < 60) return "Just now";
+    past = new Date(past.getTime() + (5.5 * 60 * 60 * 1000));
 
-if(diff < 3600) return Math.floor(diff/60) + " min ago";
+    let now = new Date();
 
-if(diff < 86400) return Math.floor(diff/3600) + " hrs ago";
+    let diff = (now - past) / 1000;
 
-return past.toLocaleString(); // fallback
+    if(diff < 60) return "Just now";
+    if(diff < 3600) return Math.floor(diff/60) + " min ago";
+    if(diff < 86400) return Math.floor(diff/3600) + " hrs ago";
+
+    return past.toLocaleString();
 }
 
 
 
 
     // 📊 LOAD PAYMENTS
-    fetch("http://localhost:8080/student/payments/" + roll)
+    fetch("https://exampay-backend.onrender.com/student/payments/" + roll)
     .then(response => response.json())
     .then(data => {
 

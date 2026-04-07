@@ -233,7 +233,7 @@ margin:20px;
 
     async function loadAnalytics(){
 
-let res = await fetch("http://localhost:8080/admin/analytics");
+let res = await fetch("https://exampay-backend.onrender.com/admin/analytics");
 let data = await res.json();
 
 document.getElementById("paidCount").innerText = data.paid;
@@ -246,7 +246,7 @@ loadAnalytics();
 
     async function loadData(){
 
-    let res = await fetch("http://localhost:8080/admin/payments");
+    let res = await fetch("https://exampay-backend.onrender.com/admin/payments");
     allData = await res.json();
 
     render(allData);
@@ -335,7 +335,7 @@ async function notifyHod(studentId, semester){
                studentId.startsWith("EEE") ? "EEE" :
                "MECH";
 
-    await fetch("http://localhost:8080/student/notify-hod", {
+    await fetch("https://exampay-backend.onrender.com/student/notify-hod", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -357,7 +357,7 @@ async function notifyHod(studentId, semester){
 
 
     async function notifyStudent(studentId,semester){
-    await fetch(`http://localhost:8080/admin/notify-student/${studentId}/${semester}`, {method:"POST"});
+    await fetch(`https://exampay-backend.onrender.com/admin/notify-student/${studentId}/${semester}`,{method:"POST"});
     alert('Notification sent for ${semester}');
     }
 
@@ -367,7 +367,7 @@ async function notifyHod(studentId, semester){
 
     async function notifyYear(year){
 
-await fetch(`http://localhost:8080/admin/notify-year/${year}`, {
+await fetch(`https://exampay-backend.onrender.com/admin/notify-year/${year}`, {
     method:"POST"
 });
 

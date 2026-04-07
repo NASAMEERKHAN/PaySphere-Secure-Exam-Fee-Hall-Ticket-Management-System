@@ -175,7 +175,7 @@
         "Welcome " + formatted + " HoD";
 
         // 🔥 LOAD DATA
-        fetch(`http://localhost:8080/student/hod-notifications/${dept}`)
+        fetch(`https://exampay-backend.onrender.com/student/hod-notifications/${dept}`)
         .then(res => res.json())
         .then(data => {
         allNotifications = data;
@@ -267,7 +267,7 @@
 
              console.log("Clicked ID:",id);
 
-            await fetch(`http://localhost:8080/notification/hide/${id}`, {
+            await fetch(`https://exampay-backend.onrender.com/notification/hide/${id}`, {
                 method: "PUT"
             });
 
