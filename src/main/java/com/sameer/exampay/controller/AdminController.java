@@ -61,8 +61,6 @@ public class AdminController {
         return data;
     }
 
-
-    // 🔥 GET ALL STUDENTS + THEIR PAYMENT DATA
     @GetMapping("/payments")
     public List<AdminDTO> getAllPayments(){
 
@@ -82,7 +80,7 @@ public class AdminController {
 
 
 
-            // 🔥 GET DATA FROM SemesterPayment TABLE (IMPORTANT FIX)
+            
             List<SemesterPayment> payments =
                     semesterPaymentRepository
                             .findByHallTicketNumberOrderBySemesterAsc(
@@ -101,7 +99,7 @@ public class AdminController {
 
             dto.setSemesters(semList);
 
-            // 🔥 overall status
+            
             boolean allPaid = semList.stream()
                     .allMatch(x -> x.getStatus().equalsIgnoreCase("PAID"));
 
@@ -113,7 +111,7 @@ public class AdminController {
         return result;
     }
 
-    // 🔔 NOTIFY STUDENT
+    
     @PostMapping("/notify-student/{studentId}/{semester}")
     public String notifyStudent(@PathVariable String studentId,
                                 @PathVariable String semester){
@@ -175,7 +173,7 @@ public class AdminController {
                         n.setReceiver(s.getHallTicketNumber());
                         n.setType("STUDENT");
 
-                        n.setSemester(p.getSemester()); // 🔥 IMPORTANT
+                        n.setSemester(p.getSemester()); 
 
                         n.setMessage(
                                 "Reminder: Pay your " + p.getSemester()
@@ -195,7 +193,7 @@ public class AdminController {
         return "Notifications sent (only unpaid & no duplicates)";
     }
 
-    // 🔔 NOTIFY HOD
+    
     @PostMapping("/notify-hod/{department}")
     public String notifyHod(@PathVariable String department){
 
