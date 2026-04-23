@@ -19,7 +19,7 @@ public class SemesterPayment {
 
     private String status;
 
-    // getters and setters
+
 
     public Long getId() {
         return id;
