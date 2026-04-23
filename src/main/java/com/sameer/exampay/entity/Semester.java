@@ -19,7 +19,7 @@ public class Semester {
     @JoinColumn(name = "student_id")
     private Student student;
 
-    // getters & setters
+    
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
