@@ -135,14 +135,14 @@
 
 <div class="container">
 
-    <!-- Cards -->
+    
     <div class="cards">
         <div class="card students">Total Students: <span id="total"></span></div>
         <div class="card paid">Paid: <span id="paid"></span></div>
         <div class="card pending">Pending: <span id="pending"></span></div>
     </div>
 
-    <!-- Table -->
+    
     <table>
         <thead>
         <tr>
@@ -174,7 +174,7 @@
     document.getElementById("welcomeText").innerText =
         "Welcome " + formatted + " HoD";
 
-        // 🔥 LOAD DATA
+        
         fetch(`https://exampay-backend.onrender.com/student/hod-notifications/${dept}`)
         .then(res => res.json())
         .then(data => {
@@ -184,7 +184,7 @@
         .catch(err => console.error("Fetch Error:", err));
 
 
-        // 🔥 RENDER TABLE
+        
         function renderTable(data){
         let table = document.getElementById("tableBody");
         table.innerHTML = "";
@@ -213,7 +213,7 @@
         }
 
 
-        // 🔥 YEAR FILTER
+
         function filterYearDropdown(){
 
         let year = document.getElementById("yearFilter").value;
@@ -236,7 +236,7 @@
         }
 
 
-        // 🔥 CARDS
+        
         function updateCards(data){
         document.getElementById("total").innerText = data.length;
         document.getElementById("paid").innerText = data.length;
@@ -244,7 +244,7 @@
         }
 
 
-        // 🔥 FORMAT
+    
         function formatDept(dept){
         if(dept === "CSE_DS") return "CSE (DS)";
         if(dept === "AI_DS") return "AI & DS";
@@ -252,7 +252,7 @@
         }
 
 
-        // 🔥 RECEIPT
+        
         function viewReceipt(studentId, semester){
         localStorage.setItem("receiptSemester", semester);
         localStorage.setItem("receiptAmount", 8750);
@@ -261,7 +261,7 @@
         }
 
 
-        // 🔥 ISSUE HALL TICKET
+        
 
         async function issueHallTicket(studentId, id, btn){
 
@@ -276,7 +276,7 @@
             alert(`Hall Ticket issued for ${studentId}`);
         }
 
-        // 🔥 LOGOUT (NOW WORKS)
+        
         function logout(){
         localStorage.clear();
         window.location.href = "index.html";
