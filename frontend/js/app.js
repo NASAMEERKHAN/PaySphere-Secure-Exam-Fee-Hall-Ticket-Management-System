@@ -1,6 +1,4 @@
-/* ===============================
-STUDENT LOGIN
-================================ */
+
 
 async function loginStudent(){
 
@@ -39,9 +37,6 @@ alert("Invalid ID or Password")
 }
 
 
-/* ===============================
-SHOW WELCOME MESSAGE
-================================ */
 
 function showWelcome(){
 
@@ -55,9 +50,6 @@ welcomeText.innerText = "Welcome " + roll
 }
 
 
-/* ===============================
-LOGOUT
-================================ */
 
 function logout(){
 
@@ -67,9 +59,7 @@ window.location.href="index.html"
 }
 
 
-/* ===============================
-LOAD SEMESTERS TABLE
-================================ */
+
 
 function loadSemesters(){
 
@@ -135,18 +125,15 @@ table.innerHTML+=row
 }
 
 
-/* ===============================
-PAYMENT REDIRECT
-================================ */
 
 
 function payFee(semester,amount){
 
-// store payment info
+
 localStorage.setItem("payAmount", amount)
 localStorage.setItem("paySemester", semester)
 
-// redirect to payment page
+
 window.location.href = "payment.html"
 
 }
@@ -165,9 +152,7 @@ location.reload()
 })
 
 }
-/* ===============================
-AUTO LOAD WHEN PAGE OPENS
-================================ */
+
 
 document.addEventListener("DOMContentLoaded",function(){
 
