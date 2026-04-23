@@ -39,7 +39,7 @@ public class StudentController {
         this.notificationRepository = notificationRepository;
     }
 
-    // 🔐 LOGIN
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Student loginRequest){
 
@@ -61,7 +61,7 @@ public class StudentController {
 
         return ResponseEntity.ok(student);
     }
-    // 📊 GET PAYMENTS
+    
     @GetMapping("/payments/{hallTicket}")
     public List<SemesterPayment> getPayments(@PathVariable String hallTicket){
 
@@ -71,7 +71,7 @@ public class StudentController {
     @PostMapping("/add")
     public Student addStudent(@RequestBody Student student){
 
-        // 🔥 Auto-generate password based on hallticket
+        
         String hallTicket = student.getHallTicketNumber();
 
         if(hallTicket.endsWith("101") || hallTicket.endsWith("1")){
@@ -85,10 +85,9 @@ public class StudentController {
         } else if(hallTicket.endsWith("105") || hallTicket.endsWith("5")){
             student.setPassword("9999");
         } else {
-            student.setPassword("0000"); // default fallback
+            student.setPassword("0000"); 
         }
 
-        // 1️⃣ Save student
         Student savedStudent = studentRepository.save(student);
 
         String[] semesters={
@@ -97,23 +96,23 @@ public class StudentController {
                 "3-1","3-2",
                 "4-1","4-2"
         };
-        // 2️⃣ Create semester payments
+        
         for(String sem : semesters){
             SemesterPayment p = new SemesterPayment();
             p.setHallTicketNumber(savedStudent.getHallTicketNumber());
             p.setSemester(sem);
 
 
-// extract last digit
+
             char lastChar = hallTicket.charAt(hallTicket.length() - 1);
             int lastDigit = Character.getNumericValue(lastChar);
 
             double amount;
 
             if(lastDigit % 2 == 0){
-                amount = 12000.0; // EVEN
+                amount = 12000.0; 
             } else {
-                amount = 8750.0; // ODD
+                amount = 8750.0; 
             }
 
             p.setAmount(amount);
@@ -126,7 +125,7 @@ public class StudentController {
     }
 
 
-    // 💰 MARK PAYMENT
+    
     @PutMapping("/pay/{hallTicket}/{semester}")
     public String markPaid(@PathVariable String hallTicket,
                            @PathVariable String semester){
@@ -142,7 +141,6 @@ public class StudentController {
         return "Payment updated successfully";
     }
 
-    // 🔔 GET NOTIFICATIONS
     @GetMapping("/notifications/{studentId}")
     public List<Notification> getStudentNotifications(@PathVariable String studentId){
 
@@ -152,7 +150,7 @@ public class StudentController {
                 .toList();
     }
 
-    // 🔴 UNREAD COUNT
+    
     @GetMapping("/notifications/unread/{studentId}")
     public long getUnreadCount(@PathVariable String studentId){
 
@@ -162,7 +160,7 @@ public class StudentController {
                 .count();
     }
 
-    // ✔ MARK AS READ
+    
     @PutMapping("/notifications/read/{id}")
     public String markAsRead(@PathVariable Long id) {
 
@@ -178,7 +176,7 @@ public class StudentController {
 
             Notification n = notificationRepository.findById(id).orElseThrow();
 
-            n.setHidden(true); // 🔥 NOT deleting
+            n.setHidden(true); 
             notificationRepository.save(n);
 
             return "Notification hidden";
