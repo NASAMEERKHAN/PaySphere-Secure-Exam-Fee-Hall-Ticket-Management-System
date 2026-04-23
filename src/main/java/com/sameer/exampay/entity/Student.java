@@ -38,7 +38,7 @@ public class Student {
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<Semester> semesters;
 
-    // getters & setters
+
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
